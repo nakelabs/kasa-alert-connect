@@ -78,6 +78,10 @@ const SendAlert = () => {
     }
   };
 
+  const handleConfirmChange = (checked: boolean | "indeterminate") => {
+    setConfirmSend(checked === true);
+  };
+
   return (
     <DashboardLayout>
       <div className="max-w-2xl mx-auto space-y-6">
@@ -190,7 +194,7 @@ const SendAlert = () => {
                 <Checkbox
                   id="confirm"
                   checked={confirmSend}
-                  onCheckedChange={setConfirmSend}
+                  onCheckedChange={handleConfirmChange}
                 />
                 <Label htmlFor="confirm" className="text-sm">
                   I confirm that I want to send this alert to {getRecipientCount().toLocaleString()} recipients
