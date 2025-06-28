@@ -17,14 +17,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock user data for demonstration
-const mockUsers = [
-  { id: '1', email: 'redcross@kasa.com', password: 'demo123', agencyName: 'Red Cross Emergency Response', role: 'admin' },
-  { id: '2', email: 'health@kasa.com', password: 'demo123', agencyName: 'Health Authority', role: 'admin' },
-  { id: '3', email: 'fire@kasa.com', password: 'demo123', agencyName: 'Fire & Rescue Service', role: 'admin' },
-  { id: '4', email: 'police@kasa.com', password: 'demo123', agencyName: 'Police Department', role: 'admin' },
-];
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,19 +34,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log('Attempting login for:', email);
     setIsLoading(true);
     
-    // Simulate API call delay
+    // TODO: Replace with actual API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    const mockUser = mockUsers.find(u => u.email === email && u.password === password);
-    
-    if (mockUser) {
-      const { password: _, ...userWithoutPassword } = mockUser;
-      setUser(userWithoutPassword);
-      localStorage.setItem('kasaUser', JSON.stringify(userWithoutPassword));
-      setIsLoading(false);
-      return true;
-    }
-    
+    // TODO: Implement real authentication
     setIsLoading(false);
     return false;
   };

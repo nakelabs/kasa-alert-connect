@@ -16,44 +16,8 @@ const UploadUsers = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  // Mock user data
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: 'John Smith',
-      phone: '+1 (555) 123-4567',
-      location: 'Downtown',
-      dateAdded: '2024-01-15'
-    },
-    {
-      id: 2,
-      name: 'Sarah Johnson',
-      phone: '+1 (555) 987-6543',
-      location: 'North District',
-      dateAdded: '2024-01-15'
-    },
-    {
-      id: 3,
-      name: 'Mike Davis',
-      phone: '+1 (555) 555-0123',
-      location: 'East District',
-      dateAdded: '2024-01-14'
-    },
-    {
-      id: 4,
-      name: 'Emily Wilson',
-      phone: '+1 (555) 888-9999',
-      location: 'South District',
-      dateAdded: '2024-01-14'
-    },
-    {
-      id: 5,
-      name: 'Robert Brown',
-      phone: '+1 (555) 111-2222',
-      location: 'West District',
-      dateAdded: '2024-01-13'
-    }
-  ]);
+  // TODO: Replace with actual API calls
+  const [users, setUsers] = useState<any[]>([]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -76,38 +40,20 @@ const UploadUsers = () => {
     setIsUploading(true);
     console.log('Uploading file:', selectedFile.name);
     
-    // Simulate upload process
+    // TODO: Implement actual file upload and processing
     setTimeout(() => {
       setIsUploading(false);
       toast({
-        title: "Upload successful",
-        description: `${selectedFile.name} has been processed successfully`,
+        title: "Upload ready",
+        description: "Connect to a backend service to process CSV files",
+        variant: "destructive",
       });
-      
-      // Mock adding new users
-      const newUsers = [
-        {
-          id: Date.now(),
-          name: 'New User 1',
-          phone: '+1 (555) 999-0000',
-          location: 'Downtown',
-          dateAdded: '2024-01-20'
-        },
-        {
-          id: Date.now() + 1,
-          name: 'New User 2',
-          phone: '+1 (555) 999-0001',
-          location: 'North District',
-          dateAdded: '2024-01-20'
-        }
-      ];
-      
-      setUsers(prev => [...prev, ...newUsers]);
       setSelectedFile(null);
-    }, 2000);
+    }, 1000);
   };
 
   const handleDeleteUser = (userId: number) => {
+    // TODO: Implement actual user deletion
     setUsers(users.filter(user => user.id !== userId));
     toast({
       title: "User removed",
@@ -116,10 +62,12 @@ const UploadUsers = () => {
   };
 
   const handleDownloadTemplate = () => {
+    // TODO: Generate and download actual CSV template
     console.log('Downloading CSV template...');
     toast({
-      title: "Template downloaded",
-      description: "CSV template has been downloaded to your device",
+      title: "Template ready",
+      description: "Connect to a backend service to generate templates",
+      variant: "destructive",
     });
   };
 
@@ -134,7 +82,7 @@ const UploadUsers = () => {
               Manage Recipients
             </CardTitle>
             <CardDescription>
-              Upload and manage your alert recipients for {user?.agencyName}
+              Upload and manage your alert recipients for {user?.agencyName || 'your agency'}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -171,7 +119,7 @@ const UploadUsers = () => {
                           {isUploading ? (
                             <>
                               <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-2"></div>
-                              Uploading...
+                              Processing...
                             </>
                           ) : (
                             <>
@@ -223,52 +171,52 @@ const UploadUsers = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {users.map((user) => (
-                <Card key={user.id} className="hover:shadow-sm transition-shadow">
-                  <CardContent className="pt-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-4">
-                          <div>
-                            <p className="font-medium text-sm">{user.name}</p>
-                            <p className="text-xs text-gray-600">{user.phone}</p>
+            {users.length === 0 ? (
+              <div className="text-center py-12">
+                <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No recipients yet</h3>
+                <p className="text-gray-600 mb-4">
+                  Upload a CSV file or add individual recipients to get started
+                </p>
+                <Button variant="outline">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Your First Recipient
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {users.map((user) => (
+                  <Card key={user.id} className="hover:shadow-sm transition-shadow">
+                    <CardContent className="pt-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-4">
+                            <div>
+                              <p className="font-medium text-sm">{user.name}</p>
+                              <p className="text-xs text-gray-600">{user.phone}</p>
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {user.location}
+                            </Badge>
                           </div>
-                          <Badge variant="outline" className="text-xs">
-                            {user.location}
-                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500">Added {user.dateAdded}</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteUser(user.id)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500">Added {user.dateAdded}</span>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDeleteUser(user.id)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-
-              {users.length === 0 && (
-                <div className="text-center py-12">
-                  <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No recipients yet</h3>
-                  <p className="text-gray-600 mb-4">
-                    Upload a CSV file or add individual recipients to get started
-                  </p>
-                  <Button variant="outline">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Your First Recipient
-                  </Button>
-                </div>
-              )}
-            </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

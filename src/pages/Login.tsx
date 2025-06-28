@@ -35,10 +35,10 @@ const Login = () => {
       });
       navigate('/dashboard');
     } else {
-      setError('Invalid email or password');
+      setError('Authentication service not connected');
       toast({
-        title: "Login failed",
-        description: "Please check your credentials and try again",
+        title: "Login unavailable",
+        description: "Connect to a backend service for authentication",
         variant: "destructive",
       });
     }
@@ -60,21 +60,18 @@ const Login = () => {
           <p className="text-gray-600 mt-2">Access your emergency alert dashboard</p>
         </div>
 
-        {/* Demo Credentials */}
+        {/* Info Card */}
         <Card className="bg-blue-50 border-blue-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
-              Demo Credentials
+              Setup Required
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-0">
-            <div className="space-y-2 text-xs">
-              <div><strong>Red Cross:</strong> redcross@kasa.com / demo123</div>
-              <div><strong>Health Authority:</strong> health@kasa.com / demo123</div>
-              <div><strong>Fire Service:</strong> fire@kasa.com / demo123</div>
-              <div><strong>Police:</strong> police@kasa.com / demo123</div>
-            </div>
+            <p className="text-xs text-blue-800">
+              Connect your application to a backend service to enable authentication and full functionality.
+            </p>
           </CardContent>
         </Card>
 
@@ -128,7 +125,7 @@ const Login = () => {
                 className="w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign in'}
+                {isLoading ? 'Connecting...' : 'Sign in'}
               </Button>
             </form>
           </CardContent>

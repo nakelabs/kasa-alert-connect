@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/contexts/AuthContext';
-import { Send, Users, MapPin, AlertTriangle } from 'lucide-react';
+import { Send, Users, AlertTriangle } from 'lucide-react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useToast } from '@/hooks/use-toast';
 
@@ -44,7 +44,7 @@ const SendAlert = () => {
 
     setIsLoading(true);
     
-    // Simulate API call
+    // TODO: Replace with actual API call
     console.log('Sending alert:', {
       message,
       recipients,
@@ -53,29 +53,20 @@ const SendAlert = () => {
       agency: user?.agencyName
     });
 
+    // TODO: Implement actual alert sending
     setTimeout(() => {
       setIsLoading(false);
       toast({
-        title: "Alert sent successfully",
-        description: `Your emergency alert has been sent to ${recipients === 'all' ? 'all recipients' : 'selected recipients'}`,
+        title: "Alert prepared",
+        description: "Connect to a backend service to send alerts",
+        variant: "destructive",
       });
-      
-      // Reset form
-      setMessage('');
-      setRecipients('all');
-      setLocation('');
-      setPriority('normal');
-      setConfirmSend(false);
-    }, 2000);
+    }, 1000);
   };
 
   const getRecipientCount = () => {
-    switch (recipients) {
-      case 'all': return 1247;
-      case 'location': return location ? 350 : 0;
-      case 'priority': return 89;
-      default: return 0;
-    }
+    // TODO: Get actual recipient count from API
+    return 0;
   };
 
   const handleConfirmChange = (checked: boolean | "indeterminate") => {
@@ -92,7 +83,7 @@ const SendAlert = () => {
               Send Emergency Alert
             </CardTitle>
             <CardDescription>
-              Send SMS alerts to your recipients - {user?.agencyName}
+              Send SMS alerts to your recipients - {user?.agencyName || 'Your Agency'}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -172,6 +163,11 @@ const SendAlert = () => {
                       This alert will be sent to <strong>{getRecipientCount().toLocaleString()}</strong> recipients
                     </span>
                   </div>
+                  {getRecipientCount() === 0 && (
+                    <p className="text-xs text-blue-600 mt-1">
+                      No recipients found. Add recipients in the Manage Users section.
+                    </p>
+                  )}
                 </CardContent>
               </Card>
 
@@ -211,13 +207,13 @@ const SendAlert = () => {
                 {isLoading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Sending Alert...
+                    Preparing Alert...
                   </>
                 ) : (
                   <>
                     <Send className="mr-2 h-4 w-4" />
                     Send Alert Now
-                  </>
+                  </Button>
                 )}
               </Button>
             </form>
