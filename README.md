@@ -1,53 +1,88 @@
-# Welcome to your Lovable project
+# KASA Alert Connect - Emergency Alert Management System
 
-## Project info
+KASA (Keep All Safe & Alert) is a modern web application designed for emergency agencies to send and manage alerts to citizens efficiently.
 
-**URL**: https://lovable.dev/projects/1586c018-eb2a-4659-a277-db9070f332f9
+## Features
 
-## How can I edit this code?
+- **Multi-Agency Platform**: Secure platform where each agency manages their own data and recipients
+- **Instant Alerts**: Send emergency alerts to thousands of recipients simultaneously via SMS
+- **Two-Way Communication**: Receive and track replies from alert recipients in real-time
+- **Location-Based Targeting**: Send targeted alerts based on geographic regions
+- **Alert Management**: Comprehensive logging and tracking of alert delivery status
+- **User Management**: Upload and manage recipient databases via CSV or manual entry
 
-There are several ways of editing your application.
+## Technology Stack
 
-**Use Lovable**
+- **Frontend**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Routing**: React Router DOM
+- **State Management**: React Context + TanStack Query
+- **Form Handling**: React Hook Form with Zod validation
+- **UI Components**: Radix UI primitives
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1586c018-eb2a-4659-a277-db9070f332f9) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ and npm
+- Modern web browser
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+# Clone the repository
+git clone <repository-url>
 
-Follow these steps:
+# Navigate to project directory
+cd kasa-alert-connect
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Available Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build for development
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-**Use GitHub Codespaces**
+## Backend Integration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
+This frontend is ready for backend integration. The application currently uses mock data and simulated API calls. To integrate with a real backend:
+
+1. Update the authentication context in `src/contexts/AuthContext.tsx`
+2. Replace mock data with actual API calls in all pages
+3. Configure environment variables for API endpoints
+4. Update the query client configuration for proper error handling
+
+## Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+├── contexts/           # React contexts (Auth, etc.)
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+├── pages/              # Page components
+└── main.tsx           # Application entry point
+```
+
+## Contributing
+
+1. Follow the existing code style and patterns
+2. Use TypeScript for all new code
+3. Ensure components are accessible and responsive
+4. Test changes across different screen sizes
+
+## License
+
+This project is proprietary software for emergency management agencies.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
 ## What technologies are used for this project?
