@@ -3,44 +3,22 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { Users, Send, MessageSquare, TrendingUp, Clock, CheckCircle } from 'lucide-react';
+import { Users, Send, MessageSquare, TrendingUp, Clock, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import DashboardLayout from '@/components/DashboardLayout';
 
 const Dashboard = () => {
   const { user } = useAuth();
 
-  // Mock data - in a real app, this would come from an API
+  // TODO: Replace with actual API calls
   const stats = {
-    totalUsers: 1247,
-    alertsSent: 89,
-    repliesReceived: 56,
-    deliveryRate: 98.5
+    totalUsers: 0,
+    alertsSent: 0,
+    repliesReceived: 0,
+    deliveryRate: 0
   };
 
-  const recentAlerts = [
-    {
-      id: 1,
-      message: 'Severe weather warning - Stay indoors until further notice',
-      recipients: 450,
-      sent: '2 hours ago',
-      status: 'delivered'
-    },
-    {
-      id: 2,
-      message: 'Emergency evacuation drill scheduled for tomorrow 10 AM',
-      recipients: 1200,
-      sent: '1 day ago',
-      status: 'delivered'
-    },
-    {
-      id: 3,
-      message: 'Road closure on Main Street due to emergency maintenance',
-      recipients: 800,
-      sent: '2 days ago',
-      status: 'delivered'
-    }
-  ];
+  const recentAlerts: any[] = []; // TODO: Fetch from API
 
   return (
     <DashboardLayout>
@@ -49,7 +27,7 @@ const Dashboard = () => {
         <Card className="gradient-bg text-white">
           <CardHeader>
             <CardTitle className="text-2xl">
-              Welcome, {user?.agencyName}
+              Welcome, {user?.agencyName || 'Agency'}
             </CardTitle>
             <CardDescription className="text-blue-100">
               Your emergency alert management dashboard
@@ -104,7 +82,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-purple-700">{stats.repliesReceived}</div>
-              <p className="text-xs text-purple-600">Response rate: {((stats.repliesReceived / stats.alertsSent) * 100).toFixed(1)}%</p>
+              <p className="text-xs text-purple-600">Response rate: {stats.alertsSent > 0 ? ((stats.repliesReceived / stats.alertsSent) * 100).toFixed(1) : 0}%</p>
             </CardContent>
           </Card>
 
@@ -132,32 +110,25 @@ const Dashboard = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {recentAlerts.map((alert) => (
-                <div key={alert.id} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900 mb-1">
-                      {alert.message}
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-gray-600">
-                      <span>Sent to {alert.recipients} recipients</span>
-                      <span>{alert.sent}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 text-green-600">
-                    <CheckCircle className="h-4 w-4" />
-                    <span className="text-xs font-medium">Delivered</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 pt-4 border-t">
-              <Link to="/alert-logs">
-                <Button variant="outline" className="w-full">
-                  View All Alert Logs
-                </Button>
-              </Link>
-            </div>
+            {recentAlerts.length === 0 ? (
+              <div className="text-center py-12">
+                <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No alerts sent yet</h3>
+                <p className="text-gray-600 mb-4">
+                  Start by sending your first emergency alert
+                </p>
+                <Link to="/send-alert">
+                  <Button>
+                    <Send className="mr-2 h-4 w-4" />
+                    Send Your First Alert
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {/* TODO: Render actual alert data */}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

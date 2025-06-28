@@ -27,21 +27,22 @@ const menuItems = [
 
 function AppSidebar() {
   const { user, logout } = useAuth();
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const isCollapsed = state === 'collapsed';
   const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive ? 'bg-sidebar-accent text-sidebar-accent-foreground font-medium' : 'hover:bg-sidebar-accent/50 text-sidebar-foreground';
 
   return (
-    <Sidebar className={collapsed ? 'w-14' : 'w-64'} collapsible>
+    <Sidebar className={isCollapsed ? 'w-14' : 'w-64'} collapsible="icon">
       <SidebarContent className="gradient-bg">
         <div className="p-4 border-b border-sidebar-border">
           <div className="flex items-center gap-2">
             <Shield className="h-8 w-8 text-white" />
-            {!collapsed && (
+            {!isCollapsed && (
               <div>
                 <h1 className="text-xl font-bold text-white">KASA</h1>
                 <p className="text-xs text-blue-100">Keep All Safe & Alert</p>
@@ -50,7 +51,7 @@ function AppSidebar() {
           </div>
         </div>
 
-        {!collapsed && user && (
+        {!isCollapsed && user && (
           <div className="p-4 border-b border-sidebar-border">
             <p className="text-sm text-blue-100 mb-1">Logged in as:</p>
             <p className="text-white font-medium text-sm">{user.agencyName}</p>
@@ -66,7 +67,7 @@ function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} className={getNavCls}>
                       <item.icon className="mr-2 h-4 w-4" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -80,10 +81,10 @@ function AppSidebar() {
             onClick={logout}
             variant="ghost"
             className="w-full text-white hover:bg-sidebar-accent/50 justify-start"
-            size={collapsed ? "sm" : "default"}
+            size={isCollapsed ? "sm" : "default"}
           >
             <LogOut className="h-4 w-4" />
-            {!collapsed && <span className="ml-2">Logout</span>}
+            {!isCollapsed && <span className="ml-2">Logout</span>}
           </Button>
         </div>
       </SidebarContent>
